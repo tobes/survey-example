@@ -1,7 +1,93 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+    /*
+      I have just put this inline in the base template.
+      in a real project I'd have created a seperate css file and linked it.
+      I've added some comments as to my decisions.
+     */
+
+    /* less 'fussy' font */
+    * {
+        font-family:arial, sans-serif;
+    }
+    h1 {
+        text-align:center;
+        color:green;
+    }
+    /* put a border round the form
+       really the question should be inside the form box but I don't
+       want to change the template html and create extra noise
+     */
+    form {
+        border:1px solid green;
+        border-radius:0.5em;
+        max-width:400px;
+        padding:2em 3em;
+        margin:0 auto;
+    }
+    /* give things a bit of breathing room */
+    input, textarea {
+        margin-top:1em;
+        margin-bottom:1em;
+    }
+    /* mess about with the submit button */
+    input[type=submit] {
+        background-color:green;
+        color:#fff;
+        font-size:1.2em;
+        border:0;
+        border-radius:0.5em;
+        padding:0.25em 1em;;
+        margin:2em auto 1em auto;
+        display:block;
+    }
+    /* subtle hover effect to indicate actionability */
+    input[type=submit]:hover {
+        background-color:forestgreen;
+    }
+    /* may as well use the space we have */
+    input[type=text], textarea {
+        width:100%;
+    }
+    /* make the radio buttons a little nicer */
+    input[type=radio]{
+        margin-right:1em;
+    }
+    /* hide the field set border
+       I could have styled this rather than the form
+     */
+    fieldset {
+        border:none;
+    }
+    /* make the errors more noticable */
+    .help-block {
+        font-weight:bold;
+    }
+    /* green is nice */
+    label {
+        color:green;
+        font-weight:bold;
+    }
+    /* on the feedback form this allows the input/textarea to have more
+       space and I prefer the look */
+    label::after {
+        content: "\a";
+        white-space: pre;
+    }
+    /* centre the logo */
+    footer {
+        text-align:center;
+    }
+    /* svgs scale to 100% if we don't limit them */
+    img {
+        padding:20px;
+        width:100px;
+    }
+    </style>
+  </head>
   <body>
-    <head></head>
       {% block content %}
       {% endblock %}
     <footer></footer>
