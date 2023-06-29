@@ -91,5 +91,45 @@
       {% block content %}
       {% endblock %}
     <footer></footer>
+  <script>
+    /*
+      As with css we would add this in a .js file in real life
+
+      This adds some emojis to help make the well being pages a little
+      more fun / usable.
+
+      It is here just to show I can use javascript and because
+      implementing it via css is not possible without changes to the
+      html templates
+
+      We assume that life is perfect so we don't worry about any
+      issues like there being the wrong number of radio buttons or the
+      order changing.
+    */
+    const RATING = [
+      '&#128515;',
+      '&#128578;',
+      '&#128528;',
+      '&#128577;',
+      '&#128544;'
+    ];
+
+    function addRatingEmoji(){
+      // check we are on a page that needs the emojis adding.
+      let path = window.location.pathname;
+      if (path.endsWith('wellbeing-q1/') || path.endsWith('wellbeing-q2/')){
+          let radios = document.querySelectorAll('input[type=radio]')
+          radios.forEach((element, index) => {
+            let span = document.createElement('span');
+            span.innerHTML = RATING[index] + '&nbsp;';
+            element.after(span);
+          })
+      }
+    }
+
+    /* we know the pages has loaded but if we had the script in it's own
+     file we sould do this. */
+    window.addEventListener("load", addRatingEmoji);
+  </script>
   </body>
 </html>
