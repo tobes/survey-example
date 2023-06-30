@@ -14,6 +14,6 @@ def is_cabinet_office_email(email_address):
 
 class FeedbackForm(forms.Form):
     template_name = "feedback.html"
-    email = forms.EmailField(required=True, validators=[is_cabinet_office_email])
+    email = forms.EmailField(required=False, validators=[is_cabinet_office_email])
     content = forms.TextInput()
 
