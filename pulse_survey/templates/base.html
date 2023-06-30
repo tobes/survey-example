@@ -1,9 +1,135 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+    /*
+      I have just put this inline in the base template.
+      in a real project I'd have created a separate css file and linked it.
+      I've added some comments as to my decisions.
+     */
+
+    /* less 'fussy' font */
+    * {
+        font-family:arial, sans-serif;
+    }
+    h1 {
+        text-align:center;
+        color:green;
+    }
+    /* put a border round the form
+       really the question should be inside the form box but I don't
+       want to change the template html and create extra noise
+     */
+    form {
+        border:1px solid green;
+        border-radius:0.5em;
+        max-width:400px;
+        padding:2em 3em;
+        margin:0 auto;
+    }
+    /* give things a bit of breathing room */
+    input, textarea {
+        margin-top:1em;
+        margin-bottom:1em;
+    }
+    /* mess about with the submit button */
+    input[type=submit] {
+        background-color:green;
+        color:#fff;
+        font-size:1.2em;
+        border:0;
+        border-radius:0.5em;
+        padding:0.25em 1em;;
+        margin:2em auto 1em auto;
+        display:block;
+    }
+    /* subtle hover effect to indicate action-ability */
+    input[type=submit]:hover {
+        background-color:forestgreen;
+    }
+    /* may as well use the space we have */
+    input[type=text], textarea {
+        width:100%;
+    }
+    /* make the radio buttons a little nicer */
+    input[type=radio]{
+        margin-right:1em;
+    }
+    /* hide the field set border
+       I could have styled this rather than the form
+     */
+    fieldset {
+        border:none;
+    }
+    /* make the errors more noticeable */
+    .help-block {
+        font-weight:bold;
+    }
+    /* green is nice */
+    label {
+        color:green;
+        font-weight:bold;
+    }
+    /* on the feedback form this allows the input/textarea to have more
+       space and I prefer the look */
+    label::after {
+        content: "\a";
+        white-space: pre;
+    }
+    /* centre the logo */
+    footer {
+        text-align:center;
+    }
+    /* svgs scale to 100% if we don't limit them */
+    img {
+        padding:20px;
+        width:100px;
+    }
+    </style>
+  </head>
   <body>
-    <head></head>
       {% block content %}
       {% endblock %}
     <footer><img src="/static/images/i-dot-ai-logo.svg"></footer>
+  <script>
+    /*
+      As with css we would add this in a .js file in real life
+
+      This adds some emojis to help make the well being pages a little
+      more fun / usable.
+
+      It is here just to show I can use javascript and because
+      implementing it via css is not possible without changes to the
+      html templates
+
+      We assume that life is perfect so we don't worry about any
+      issues like there being the wrong number of radio buttons or the
+      order changing.
+    */
+    const RATING = [
+      '&#128515;',
+      '&#128578;',
+      '&#128528;',
+      '&#128577;',
+      '&#128544;'
+    ];
+
+    function addRatingEmoji(){
+      // check we are on a page that needs the emojis adding.
+      let path = window.location.pathname;
+      if (path.endsWith('wellbeing-q1/') || path.endsWith('wellbeing-q2/')){
+          let radios = document.querySelectorAll('input[type=radio]')
+          radios.forEach((element, index) => {
+            let span = document.createElement('span');
+            span.innerHTML = RATING[index] + '&nbsp;';
+            element.after(span);
+          })
+      }
+    }
+
+    /* we know the pages has loaded but if we had the script in it's own
+     file we sould do this. */
+    window.addEventListener("load", addRatingEmoji);
+  </script>
   </body>
 </html>
