@@ -7,8 +7,14 @@ from django.views.generic.edit import FormView
 from pulse_survey.survey.forms import FeedbackForm
 from pulse_survey.survey.models import Result, Feedback
 
-
-WELLBEING_RESPONSES = {"Agree", "Strongly agree", "Disagree", "Strongly disagree", "Neither agree nor disagree"}
+# I like this order
+WELLBEING_RESPONSES = [
+    "Strongly agree",
+    "Agree",
+    "Neither agree nor disagree",
+    "Disagree",
+    "Strongly disagree",
+]
 
 
 def index(request):
@@ -23,6 +29,8 @@ def team_view(request, session_id):
     errors = {}
     page_number = 1
     result, _ = Result.objects.get_or_create(session_id=session_id, page_number=page_number)
+    # I opted to sort the teams when sent to the template rather than just
+    # changing this set to a list.
     teams = {"Team A", "Team B", "Team C"}
     chosen_team = None
     if result.data:
@@ -31,14 +39,15 @@ def team_view(request, session_id):
         result.data = request.POST
         result.save()
         return redirect(reverse("location", args=(session_id,)))
-    return render(request, "team_question.html", {"errors": errors, "teams": teams, "chosen_team": chosen_team})
+    return render(request, "team_question.html", {"errors": errors, "teams": sorted(teams), "chosen_team": chosen_team})
 
 
 def location_view(request, session_id):
     errors = {}
     page_number = 2
     result, _ = Result.objects.get_or_create(session_id=session_id, page_number=page_number)
-    locations = {"London", "Manchester", "Glasgow", "York", "Bristol"}
+    # so here is the other option
+    locations = ["London", "Manchester", "Glasgow", "York", "Bristol"]
     chosen_location = None
     if result.data:
         chosen_location = result.data.get("location")
