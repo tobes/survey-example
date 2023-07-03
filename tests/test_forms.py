@@ -27,8 +27,8 @@ class CabinetOfficeValidationTest(SimpleTestCase):
         self.assertTrue(result)
 
     def test_is_cabinet_office_email_invalid(self):
-        valid_email = "invalid@not-cabinetoffice.gov.uk"
+        invalid_email = "invalid@not-cabinetoffice.gov.uk"
         with self.assertRaises(ValidationError):
-            result = forms.is_cabinet_office_email(valid_email)
+            result = forms.is_cabinet_office_email(invalid_email)
 
 
